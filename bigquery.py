@@ -36,3 +36,16 @@ def recreate_table(data):
   new_table.create()
   new_table.upload_from_file(data, 'CSV', skip_leading_rows=1)
   current['table'] = new_table
+
+def list_errors():
+  jobs = current['client'].list_jobs()
+
+  for job in jobs:
+
+    if job.error_result is not None:
+      yield job.destination.name, job.error_result['message']
+
+    errors = job.errors or ()
+
+    for error in errors:
+      yield error['message']
