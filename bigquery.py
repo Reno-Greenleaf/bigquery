@@ -34,7 +34,7 @@ def recreate_table(data):
   current['table'].delete()
   new_table = current['dataset'].table(name, schema)
   new_table.create()
-  new_table.upload_from_file(data, 'CSV', skip_leading_rows=1)
+  new_table.upload_from_file(data, 'CSV', skip_leading_rows=1, allow_jagged_rows=True, allow_quoted_newlines=True)
   current['table'] = new_table
 
 def list_errors():
